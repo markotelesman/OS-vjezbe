@@ -1,0 +1,28 @@
+Zadatak 1
+
+mkdir -p vjezba_2/data vjezba_2/backup
+touch vjezba_2/data/script.js && touch vjezba_2/data/style.css && touch vjezba_2/data/.env
+echo 'console.log("Hello, World!")' > vjezba_2/data/script.js 
+echo 'body { background-color: #f0f0f0; }' > vjezba_2/data/style.css
+echo 'VJEZBE=OS' > vjezba_2/data/.env 
+
+Zadatak 2
+
+cp -rv vjezba_2/data/* vjezba_2/backup/
+cp -rv vjezba_2/data/.* vjezba_2/backup/
+cd vjezba_2/data/
+ls -laS /c/Users/marko/OneDrive/Documents/GitHub/OS-vje-be/OS2-zadace/vjezba_2/backup/
+
+Zadatak 3
+
+rm -v script.js style.css 
+cd ..
+cp -nv backup/* data/
+ls -lAt data/
+
+Zadatak 4
+
+cd /c/Users//marko/OneDrive/Documents/3D\ Printer/
+ls -laS
+ls -lhS
+ls -lRt
