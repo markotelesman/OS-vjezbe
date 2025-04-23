@@ -43,3 +43,39 @@ echo "$niz_brojevi" > brojevi.txt
 
 Zadatak 3
 
+#!/bin/bash
+
+rd=$(pwd)
+broj_zapisa=1
+prefix="screenshot_"
+
+for dat in "$rd"/*; do
+        nd=$(basename "$dat")
+        novo_ime="${prefix}${broj_zapisa}_${nd}"
+        mv "$nd" "$novo_ime"
+        echo "$novo_ime"
+
+        ((broj_zapisa++))
+done
+
+
+Zadatak 4
+
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+        echo "Proslijedjeno je vise od jednog argumenta"
+        exit 1
+fi
+
+naziv_direktorija=$1
+
+
+if [ ! -d "./$naziv_direktorija" ]; then
+        echo "Direktorij '$naziv_direktorija' ne postoji"
+        exit 1
+else
+        cd "./$naziv_direktorija"
+        naziv_zippa="svi_zapisi.zip"
+        zip -r "$naziv_zippa" *
+fi
