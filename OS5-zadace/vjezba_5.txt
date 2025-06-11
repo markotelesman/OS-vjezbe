@@ -1,0 +1,59 @@
+Zadatak 1
+
+- PID 2217 - jedinstveni identifikator procesa, pokreće ga korisnik marko_telesman
+- Prioritet je 20, nice value je 0. Normalni proces koji ima zadani prioritet
+- Proces ukupno koristi 17968 KiB virtualne memorije, od toga 10240 KiB fizičke. 6528 KiB fizičkje memorije je dijeljen s drugim procesima
+- Proces spava S, ne zauzima CPU, ali koristi 0.5% fizičke memorije. Procesor je korišten ukupno 2 sekunde od pokretanja
+- Naredba koja je pokrenula process je python3 hello.py
+
+1. Direktno u htop alatu pritiskom na F9
+2. Pronaći PID u htopu ili pomoću pidof ili pgrep komande te napisati kill PID
+3. Koristeći pkill <ime_procesa>
+
+Zadatak 4
+
+rwxr-xr-x - Vlasnik može čitati, pisati i izvršavati, grupa može čitati i izvršavai, ostali mogu čitati i izvršavati
+rw-r--r-- - Vlasnik može čitati i pisati, grupa može čitati, ostali mogu čitati
+rwx------ - Vlasnik može čitati, pisati i izvršavati, grupa i ostali ne mogu ništa
+rw-rw-r-- - Vlasnik može čitati i pisati, grupa može čitati i pisati, ostali mogu čitati
+rwxrwxrwx - Svi mogu sve
+r--r--r-- - Vlasnik, grupa i ostali mogu samo čitati
+rw------- - Vlasnik može čitati i pisati, gruipa i ostali ništa
+
+
+Zadatak 5
+
+#!/bin/bash
+
+if [ "$#" -ne 2 ]; then
+    echo "Skripta očekuje točno 2 argumenta"
+    exit 1
+fi
+
+ZNAKOVI="$1"
+PUTANJA_DO_DATOTEKE="$2"
+
+pretvaranje_u_oktalno() {
+    local znakovi="$1"
+    local vlasnik=0
+    local grupa=0
+    local ostali=0
+
+    if [[ "${znakovi:0:1}" == "r" ]]; then vlasnik=$((vlasnik + 4)); fi
+    if [[ "${znakovi:1:1}" == "w" ]]; then vlasnik=$((vlasnik + 2)); fi
+    if [[ "${znakovi:2:1}" == "x" ]]; then vlasnik=$((vlasnik + 1)); fi
+
+    if [[ "${znakovi:3:1}" == "r" ]]; then grupa=$((grupa + 4)); fi
+    if [[ "${znakovi:4:1}" == "w" ]]; then grupa=$((grupa + 2)); fi
+    if [[ "${znakovi:5:1}" == "x" ]]; then grupa=$((grupa + 1)); fi
+
+    if [[ "${znakovi:6:1}" == "r" ]]; then ostali=$((ostali + 4)); fi
+    if [[ "${znakovi:7:1}" == "w" ]]; then ostali=$((ostali + 2)); fi
+    if [[ "${znakovi:8:1}" == "x" ]]; then ostali=$((ostali + 1)); fi
+
+    echo "${vlasnik}${grupa}${ostali}"
+}
+
+OKTALNI_ZNAKOVI=$(pretvaranje_u_oktalno "$ZNAKOVI")
+
+sudo chmod "$OKTALNI_ZNAKOVI" "$PUTANJA_DO_DATOTEKE"
